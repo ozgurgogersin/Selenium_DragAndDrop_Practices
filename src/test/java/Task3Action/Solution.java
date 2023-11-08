@@ -1,7 +1,9 @@
 package Task3Action;
 import Utilities.BaseDriver;
 import org.junit.Test;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.UnhandledAlertException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
@@ -38,7 +40,7 @@ public class Solution extends BaseDriver {
                 }
             }
         }
-
+        try {
         Collections.reverse(capitals);
         for (WebElement eNested : capitals) {
             for (WebElement cNested : countries) {
@@ -51,9 +53,12 @@ public class Solution extends BaseDriver {
                     action3.perform();
                 }
             }
-            break;
         }
-        driver.switchTo().alert().accept();
-        driver.quit();
+            Alert alert = driver.switchTo().alert();
+            alert.accept();
+        } catch (UnhandledAlertException e) {
+        } finally {
+            driver.quit();
+        }
     }
 }
